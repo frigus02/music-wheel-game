@@ -1,6 +1,7 @@
 {
-  "name": "music-wheel",
+  "name": "music-wheel-game",
   "version": "0.0.1",
+  "private": true,
   "description": "HTML5 music game.",
   "license": "MIT",
   "dependencies": {
