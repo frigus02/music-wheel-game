@@ -1,0 +1,6 @@
+{
+  "name": "music-wheel",
+  "dependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "music-wheel",
+  "version": "0.0.1",
+  "description": "HTML5 music game.",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "browser-sync": "^2.18.12"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "browser-sync start --server --files src --startPath src/"
+  }
+}
