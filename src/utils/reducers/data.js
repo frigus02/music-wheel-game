@@ -1,3 +1,12 @@
+const COLORS = {
+    BLUE: 'deepskyblue',
+    YELLOW: 'yellow',
+    RED: 'red',
+    PURPLE: 'magenta'
+};
+
+let LAST_GLYPH_ID = 0;
+
 function randomInt(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
@@ -5,16 +14,17 @@ function randomInt(min, max) {
 function randomColor() {
     const value = randomInt(0, 100);
     return value < 60
-        ? 'deepskyblue'
+        ? COLORS.BLUE
         : value < 75
-            ? 'yellow'
+            ? COLORS.YELLOW
             : value < 95
-                ? 'red'
-                : 'magenta';
+                ? COLORS.RED
+                : COLORS.PURPLE;
 }
 
 function createRandomGlyph(angleValue, angleRange) {
     return {
+        id: String(++LAST_GLYPH_ID),
         color: randomColor(),
         angle: randomInt(
             angleValue / angleRange * 360,
@@ -101,11 +111,44 @@ function createNewGlyphs(oldFrequencyData, newFrequencyData) {
     return newGlyphs;
 }
 
+function getModifiedPointsAfterHitGlyph(points, multiplicator, glyph) {
+    switch (glyph.color) {
+    case COLORS.BLUE:
+        return points + multiplicator;
+    default:
+        return points;
+    }
+}
+
+function getModifiedMultiplicatorAfterHitGlyph(multiplicator, glyph) {
+    switch (glyph.color) {
+    case COLORS.YELLOW:
+        return multiplicator + 1;
+    case COLORS.RED:
+        return Math.max(1, Math.floor(multiplicator / 1.5));
+    default:
+        return multiplicator;
+    }
+}
+
+function getBigRadiusTicksAfterHitGlyph(bigRadiusTicks, glyph) {
+    switch (glyph.color) {
+    case COLORS.PURPLE:
+        return 300;
+    default:
+        return bigRadiusTicks;
+    }
+}
+
 export default function reducer(
     state = {
         elapsed: 0,
         frequencyData: null,
-        glyphs: []
+        glyphs: [],
+        points: 0,
+        multiplicator: 1,
+        glyphRadius: 5,
+        remainingBigRadiusTicks: 0
     },
     action) {
     switch (action.type) {
@@ -113,22 +156,30 @@ export default function reducer(
         return {
             elapsed: 0,
             frequencyData: null,
-            glyphs: []
+            glyphs: [],
+            points: 0,
+            multiplicator: 1,
+            remainingBigRadiusTicks: 0
         };
     case 'SET_MUSIC':
         return {
             elapsed: 0,
             frequencyData: null,
-            glyphs: []
+            glyphs: [],
+            points: 0,
+            multiplicator: 1,
+            remainingBigRadiusTicks: 0
         };
     case 'TICK':
         return {
+            ...state,
+            elapsed: action.elapsed,
+            frequencyData: action.frequencyData,
             glyphs: [
                 ...moveAndRemoveReturnedGlyphs(state.glyphs),
                 ...createNewGlyphs(state.frequencyData, action.frequencyData)
             ],
-            elapsed: action.elapsed,
-            frequencyData: action.frequencyData
+            remainingBigRadiusTicks: Math.max(0, state.remainingBigRadiusTicks - 1)
         };
     case 'ADD_RANDOM_GLYPHS':
         return {
@@ -138,6 +189,18 @@ export default function reducer(
                 ...Array(action.count).fill().map(() => createRandomGlyph(0, 1))
             ]
         };
+    case 'HIT_GLYPH': {
+        const hitGlyph = state.glyphs.find(glyph => glyph.id === action.id);
+        if (!hitGlyph) return state;
+
+        return {
+            ...state,
+            glyphs: state.glyphs.filter(glyph => glyph !== hitGlyph),
+            points: getModifiedPointsAfterHitGlyph(state.points, state.multiplicator, hitGlyph),
+            multiplicator: getModifiedMultiplicatorAfterHitGlyph(state.multiplicator, hitGlyph),
+            remainingBigRadiusTicks: getBigRadiusTicksAfterHitGlyph(state.remainingBigRadiusTicks, hitGlyph)
+        };
+    }
     default:
         return state;
     }

@@ -20,6 +20,7 @@ const template = parseTemplate('mw-game-status', `
             <span id="time-elapsed"></span> /
             <span id="time-duration">NaN</span>
         </div>
+        <div id="points"></div>
     </template>
 `);
 
@@ -33,7 +34,8 @@ class MusicWheelGameStatus extends MwStateElementMixin(HTMLElement) {
             this.$ = {
                 info: this.shadowRoot.getElementById('info'),
                 timeDuration: this.shadowRoot.getElementById('time-duration'),
-                timeElapsed: this.shadowRoot.getElementById('time-elapsed')
+                timeElapsed: this.shadowRoot.getElementById('time-elapsed'),
+                points: this.shadowRoot.getElementById('points')
             };
         }
 
@@ -51,6 +53,11 @@ class MusicWheelGameStatus extends MwStateElementMixin(HTMLElement) {
 
         if (oldState.data.elapsed !== newState.data.elapsed) {
             this.$.timeElapsed.textContent = this._formatTime(newState.data.elapsed);
+        }
+
+        if (oldState.data.points !== newState.data.points ||
+            oldState.data.multiplicator !== newState.data.multiplicator) {
+            this.$.points.textContent = `${newState.data.points} (+${newState.data.multiplicator})`;
         }
     }
 
