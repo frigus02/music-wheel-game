@@ -13,12 +13,8 @@ As of now (2017-06-19) you need an update-to-date browser and enable some experi
 
 *   Firefox 54:
     *   ES Modules: dom.moduleScripts.enabled = true (since version 54)
-    *   Canvas Hit Regions: canvas.hitregions.enabled = true (since version 30)
 *   Chrome 60 (Canary):
     *   ES Modules: Experimental Web Platform features (since Chrome 60)
-    *   Canvas Hit Regions: Experimental canvas features
-
-*Note*: Canvas Hit Regions will probably not be implemented the way they are now ([WHATWG GitHub issue](https://github.com/whatwg/html/issues/1030)). I just used them because I didn't want to implement the hit detection myself.
 
 ## Gameplay
 

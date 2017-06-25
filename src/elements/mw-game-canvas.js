@@ -12,10 +12,12 @@ class MusicWheelGameCanvas extends MwStateElementMixin(MusicWheelBaseCanvas) {
         super.connectedCallback();
 
         this.$.canvas.addEventListener('mousemove', this._onMoveMove);
+        this.$.canvas.addEventListener('touchmove', this._onMoveMove);
     }
 
     disconnectedCallback() {
         this.$.canvas.removeEventListener('mousemove', this._onMoveMove);
+        this.$.canvas.removeEventListener('touchmove', this._onMoveMove);
 
         super.disconnectedCallback();
     }
@@ -23,10 +25,8 @@ class MusicWheelGameCanvas extends MwStateElementMixin(MusicWheelBaseCanvas) {
     _onDraw(settings) {
         const ctx = settings.context;
         const glyphs = this.getState().data.glyphs;
-        const isBigRadius = this.getState().data.remainingBigRadiusTicks > 0;
-        const radius = isBigRadius ? 15 : 7;
+        const radius = this.getState().data.glyphRadius;
 
-        ctx.clearHitRegions();
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, settings.width, settings.height);
 
@@ -43,18 +43,25 @@ class MusicWheelGameCanvas extends MwStateElementMixin(MusicWheelBaseCanvas) {
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, 2 * Math.PI);
             ctx.stroke();
-            ctx.addHitRegion({id: glyph.id});
         }
     }
 
     _onMoveMove(event) {
-        if (event.region) {
-            this.dispatch({
-                type: 'HIT_GLYPH',
-                id: event.region
-            });
+        this.dispatch({
+            type: 'HIT_GLYPH',
+            x: this._getTouchCoordinate(event, 'pageX') - (this._drawSettings.width / 2),
+            y: this._getTouchCoordinate(event, 'pageY') - (this._drawSettings.height / 2)
+        });
+    }
+
+    _getTouchCoordinate(evt, prop) {
+        if (evt.touches && evt.touches.length > 0) {
+            return evt.touches[0][prop];
+        } else {
+            return evt[prop];
         }
     }
+
 }
 
 customElements.define('mw-game-canvas', MusicWheelGameCanvas);

@@ -111,65 +111,71 @@ function createNewGlyphs(oldFrequencyData, newFrequencyData) {
     return newGlyphs;
 }
 
-function getModifiedPointsAfterHitGlyph(points, multiplicator, glyph) {
-    switch (glyph.color) {
-    case COLORS.BLUE:
-        return points + multiplicator;
-    default:
-        return points;
-    }
+function getHitGlyphs(glyphs, radius, mouseX, mouseY) {
+    return glyphs.filter(glyph => {
+        const distance = Math.sqrt((mouseX - glyph.x) ** 2 + (mouseY - glyph.y) ** 2);
+        return distance <= radius;
+    });
 }
 
-function getModifiedMultiplicatorAfterHitGlyph(multiplicator, glyph) {
-    switch (glyph.color) {
-    case COLORS.YELLOW:
-        return multiplicator + 1;
-    case COLORS.RED:
-        return Math.max(1, Math.floor(multiplicator / 1.5));
-    default:
-        return multiplicator;
-    }
+function getModifiedPointsAfterHitGlyph(points, multiplicator, glyphs) {
+    const blues = glyphs.filter(glyph => glyph.color === COLORS.BLUE);
+
+    return points + blues.length * multiplicator;
 }
 
-function getBigRadiusTicksAfterHitGlyph(bigRadiusTicks, glyph) {
-    switch (glyph.color) {
-    case COLORS.PURPLE:
-        return 300;
-    default:
-        return bigRadiusTicks;
-    }
+function getModifiedMultiplicatorAfterHitGlyph(multiplicator, glyphs) {
+    glyphs.forEach(glyph => {
+        if (glyph.color === COLORS.YELLOW) {
+            multiplicator += 1;
+        } else if (glyph.color === COLORS.RED) {
+            multiplicator = Math.max(1, Math.floor(multiplicator / 1.5));
+        }
+    });
+
+    return multiplicator;
 }
+
+function getBigRadiusAfterHitGlyph(bigRadiusTicks, glyphs) {
+    const includesPurple = glyphs.some(glyph => glyph.color === COLORS.PURPLE);
+
+    return includesPurple
+        ? {
+            glyphRadius: 14,
+            remainingBigRadiusTicks: 300
+        }
+        : {
+            glyphRadius: bigRadiusTicks > 0 ? 14 : 7,
+            remainingBigRadiusTicks: bigRadiusTicks
+        };
+}
+
+function getBigRadiusAfterTick(bigRadiusTicks) {
+    const newTicks = Math.max(0, bigRadiusTicks - 1);
+    return {
+        glyphRadius: newTicks > 0 ? 14 : 7,
+        remainingBigRadiusTicks: newTicks
+    };
+}
+
+const defaultState = {
+    elapsed: 0,
+    frequencyData: null,
+    glyphs: [],
+    points: 0,
+    multiplicator: 1,
+    glyphRadius: 7,
+    remainingBigRadiusTicks: 0
+};
 
 export default function reducer(
-    state = {
-        elapsed: 0,
-        frequencyData: null,
-        glyphs: [],
-        points: 0,
-        multiplicator: 1,
-        glyphRadius: 5,
-        remainingBigRadiusTicks: 0
-    },
+    state = defaultState,
     action) {
     switch (action.type) {
     case 'LOAD_FILE':
-        return {
-            elapsed: 0,
-            frequencyData: null,
-            glyphs: [],
-            points: 0,
-            multiplicator: 1,
-            remainingBigRadiusTicks: 0
-        };
+        return defaultState;
     case 'SET_MUSIC':
-        return {
-            elapsed: 0,
-            frequencyData: null,
-            glyphs: [],
-            points: 0,
-            multiplicator: 1,
-            remainingBigRadiusTicks: 0
-        };
+        return defaultState;
     case 'TICK':
         return {
             ...state,
@@ -179,7 +185,7 @@ export default function reducer(
                 ...moveAndRemoveReturnedGlyphs(state.glyphs),
                 ...createNewGlyphs(state.frequencyData, action.frequencyData)
             ],
-            remainingBigRadiusTicks: Math.max(0, state.remainingBigRadiusTicks - 1)
+            ...getBigRadiusAfterTick(state.remainingBigRadiusTicks)
         };
     case 'ADD_RANDOM_GLYPHS':
         return {
@@ -190,15 +196,15 @@ export default function reducer(
             ]
         };
     case 'HIT_GLYPH': {
-        const hitGlyph = state.glyphs.find(glyph => glyph.id === action.id);
-        if (!hitGlyph) return state;
+        const hitGlyphs = getHitGlyphs(state.glyphs, state.glyphRadius, action.x, action.y);
+        if (hitGlyphs.length === 0) return state;
 
         return {
             ...state,
-            glyphs: state.glyphs.filter(glyph => glyph !== hitGlyph),
-            points: getModifiedPointsAfterHitGlyph(state.points, state.multiplicator, hitGlyph),
-            multiplicator: getModifiedMultiplicatorAfterHitGlyph(state.multiplicator, hitGlyph),
-            remainingBigRadiusTicks: getBigRadiusTicksAfterHitGlyph(state.remainingBigRadiusTicks, hitGlyph)
+            glyphs: state.glyphs.filter(glyph => !hitGlyphs.includes(glyph)),
+            points: getModifiedPointsAfterHitGlyph(state.points, state.multiplicator, hitGlyphs),
+            multiplicator: getModifiedMultiplicatorAfterHitGlyph(state.multiplicator, hitGlyphs),
+            ...getBigRadiusAfterHitGlyph(state.remainingBigRadiusTicks, hitGlyphs)
         };
     }
     default:
