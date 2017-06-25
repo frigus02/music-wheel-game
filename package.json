@@ -9,10 +9,14 @@
   },
   "devDependencies": {
     "bower": "^1.8.0",
-    "browser-sync": "^2.18.12"
+    "browser-sync": "^2.18.12",
+    "cpy": "^5.0.0",
+    "del": "^3.0.0"
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "browser-sync start --server --files src --startPath src/"
+    "start": "browser-sync start --server --ss src --ss . --files src",
+    "start:dist": "browser-sync start --server --ss dist --files dist",
+    "build": "node ./build.js"
   }
 }

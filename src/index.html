@@ -3,16 +3,25 @@
 <head>
     <title>Music Wheel</title>
     <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../node_modules/redux/dist/redux.js"></script>
+    <script src="node_modules/redux/dist/redux.min.js"></script>
 
     <script type="module" src="elements/mw-game.js"></script>
-    <script nomodule>
-    	alert('Your browser doesn\'s support ES modules.');
-    </script>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <mw-game></mw-game>
+
+    <div id="no-modules-info" style="display:none">
+        This game requires ES modules, which your browser doesn't support.
+        Please switch to Firefox (>= 54) or Chrome (>= 60) and turn on:
+        <ul>
+            <li>Firefox: dom.moduleScripts.enabled</li>
+            <li>Chrome: Experimental Web Platform features</li>
+        </ul>
+    </div>
+    <script nomodule>
+        document.getElementById('no-modules-info').style.display = 'block';
+    </script>
 </body>
 </html>

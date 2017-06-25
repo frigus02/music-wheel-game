@@ -9,3 +9,12 @@ mw-game {
 	height: 100vh;
     background: #000;
 }
+
+#no-modules-info {
+    position: absolute;
+    top: 0;
+    max-width: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+}
