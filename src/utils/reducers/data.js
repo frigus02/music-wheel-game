@@ -187,14 +187,6 @@ export default function reducer(
             ],
             ...getBigRadiusAfterTick(state.remainingBigRadiusTicks)
         };
-    case 'ADD_RANDOM_GLYPHS':
-        return {
-            ...state,
-            glyphs: [
-                ...state.glyphs,
-                ...Array(action.count).fill().map(() => createRandomGlyph(0, 1))
-            ]
-        };
     case 'HIT_GLYPH': {
         const hitGlyphs = getHitGlyphs(state.glyphs, state.glyphRadius, action.x, action.y);
         if (hitGlyphs.length === 0) return state;

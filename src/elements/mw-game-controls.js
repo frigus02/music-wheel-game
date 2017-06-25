@@ -13,7 +13,6 @@ const template = parseTemplate('mw-game-controls', `
             }
         </style>
 
-        <button id="glyph-button">Add glyph</button>
         <button id="play-button">Play</button>
         <button id="pause-button">Pause</button>
         <select id="music-file-select">
@@ -31,7 +30,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
     constructor() {
         super();
 
-        this._addRandomGlyphs = this._addRandomGlyphs.bind(this);
         this._play = this._play.bind(this);
         this._pause = this._pause.bind(this);
         this._musicFileSelected = this._musicFileSelected.bind(this);
@@ -45,7 +43,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
             this.shadowRoot.appendChild(document.importNode(template.content, true));
 
             this.$ = {
-                glyphButton: this.shadowRoot.getElementById('glyph-button'),
                 playButton: this.shadowRoot.getElementById('play-button'),
                 pauseButton: this.shadowRoot.getElementById('pause-button'),
                 musicFileSelect: this.shadowRoot.getElementById('music-file-select'),
@@ -53,7 +50,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
             };
         }
 
-        this.$.glyphButton.addEventListener('click', this._addRandomGlyphs);
         this.$.playButton.addEventListener('click', this._play);
         this.$.pauseButton.addEventListener('click', this._pause);
         this.$.musicFileSelect.addEventListener('change', this._musicFileSelected);
@@ -65,7 +61,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
     disconnectedCallback() {
         super.disconnectedCallback();
 
-        this.$.glyphButton.removeEventListener('click', this._addRandomGlyphs);
         this.$.playButton.removeEventListener('click', this._play);
         this.$.pauseButton.removeEventListener('click', this._pause);
         this.$.musicFileSelect.removeEventListener('change', this._musicFileSelected);
@@ -74,13 +69,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
 
     get musicFile() {
         return '/src/music/' + this.$.musicFileSelect.selectedOptions[0].value;
-    }
-
-    _addRandomGlyphs() {
-        this.dispatch({
-            type: 'ADD_RANDOM_GLYPHS',
-            count: 100
-        });
     }
 
     _play() {
