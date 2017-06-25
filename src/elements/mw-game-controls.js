@@ -68,7 +68,7 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
     }
 
     get musicFile() {
-        return '/src/music/' + this.$.musicFileSelect.selectedOptions[0].value;
+        return 'music/' + this.$.musicFileSelect.selectedOptions[0].value;
     }
 
     _play() {
@@ -81,7 +81,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
 
     _onUpdate(oldState = {}, newState) {
         if (oldState.gameState !== newState.gameState) {
-            this.$.glyphButton.disabled = newState.gameState !== 'PLAYING';
             this.$.playButton.disabled = !(newState.gameState === 'READY' || newState.gameState === 'PAUSED');
             this.$.pauseButton.disabled = newState.gameState !== 'PLAYING';
             this.$.musicFileSelect.disabled = newState.gameState === 'LOADING';
