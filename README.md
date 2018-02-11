@@ -29,8 +29,8 @@ As of now (2017-06-19) you need an update-to-date browser and enable some experi
 ## Run
 
 ```
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ## Music
