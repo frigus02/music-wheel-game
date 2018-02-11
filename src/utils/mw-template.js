@@ -1,7 +1,4 @@
-function parseTemplate(elementName, content) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-    const template = doc.head.firstChild;
+function prepareTemplate(elementName, template) {
     if (window.ShadyCSS) {
         ShadyCSS.prepareTemplate(template, elementName);
     }
@@ -9,4 +6,15 @@ function parseTemplate(elementName, content) {
     return template;
 }
 
-export { parseTemplate };
+function html(strings, ...values) {
+    const content = `
+        <template>
+            ${String.raw(strings, ...values)}
+        </template>
+    `;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, 'text/html');
+    return doc.head.firstChild;
+}
+
+export { html, prepareTemplate };

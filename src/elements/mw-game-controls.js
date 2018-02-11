@@ -1,29 +1,27 @@
-import {parseTemplate} from '../utils/mw-template.js';
+import { html, prepareTemplate } from '../utils/mw-template.js';
 import MwStateElementMixin from './mixins/mw-state-element-mixin.js';
 
-const template = parseTemplate('mw-game-controls', `
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
+const template = prepareTemplate('mw-game-controls', html`
+    <style>
+        :host {
+            display: block;
+        }
 
-            button {
-                width: 100px;
-            }
-        </style>
+        button {
+            width: 100px;
+        }
+    </style>
 
-        <button id="play-button">Play</button>
-        <button id="pause-button">Pause</button>
-        <select id="music-file-select">
-            <option>Come Back To You.mp3</option>
-            <option selected>Stories from Emona I.mp3</option>
-        </select>
-        <select id="ui-select">
-            <option value="game" selected>Game</option>
-            <option value="audio-frequency">Audio Frequency</option>
-        </select>
-    </template>
+    <button id="play-button">Play</button>
+    <button id="pause-button">Pause</button>
+    <select id="music-file-select">
+        <option>Come Back To You.mp3</option>
+        <option selected>Stories from Emona I.mp3</option>
+    </select>
+    <select id="ui-select">
+        <option value="game" selected>Game</option>
+        <option value="audio-frequency">Audio Frequency</option>
+    </select>
 `);
 
 class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {

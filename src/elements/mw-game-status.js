@@ -1,27 +1,25 @@
-import {parseTemplate} from '../utils/mw-template.js';
+import { html, prepareTemplate } from '../utils/mw-template.js';
 import MwStateElementMixin from './mixins/mw-state-element-mixin.js';
 
-const template = parseTemplate('mw-game-status', `
-    <template>
-        <style>
-            :host {
-                display: block;
-                color: #fff;
-            }
+const template = prepareTemplate('mw-game-status', html`
+    <style>
+        :host {
+            display: block;
+            color: #fff;
+        }
 
-            div {
-                display: inline-block;
-                width: 200px;
-            }
-        </style>
+        div {
+            display: inline-block;
+            width: 200px;
+        }
+    </style>
 
-        <div id="info"></div>
-        <div>
-            <span id="time-elapsed"></span> /
-            <span id="time-duration">NaN</span>
-        </div>
-        <div id="points"></div>
-    </template>
+    <div id="info"></div>
+    <div>
+        <span id="time-elapsed"></span> /
+        <span id="time-duration">NaN</span>
+    </div>
+    <div id="points"></div>
 `);
 
 class MusicWheelGameStatus extends MwStateElementMixin(HTMLElement) {
