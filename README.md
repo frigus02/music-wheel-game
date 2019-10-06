@@ -2,27 +2,27 @@
 
 An HTML5 music game. I'm mostly building this to play around with some new stuff like:
 
-*   Web Components: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/getting-started/primers/customelements), [Shadow DOM v1: Self-Contained Web Components](https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom)
-*   ES Modules: [ES6 Modules in Depth](https://ponyfoo.com/articles/es6-modules-in-depth), [ECMAScript modules in browsers](https://jakearchibald.com/2017/es-modules-in-browsers/)
-*   [Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-*   [Redux](http://redux.js.org/)
+- Web Components: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/getting-started/primers/customelements), [Shadow DOM v1: Self-Contained Web Components](https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom)
+- ES Modules: [ES6 Modules in Depth](https://ponyfoo.com/articles/es6-modules-in-depth), [ECMAScript modules in browsers](https://jakearchibald.com/2017/es-modules-in-browsers/)
+- [Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+- [Redux](http://redux.js.org/)
 
 ## Browser Requirements
 
 As of now (2019-10-06) this has been tested with:
 
-*   Firefox 63
-*   Chrome 67
+- Firefox 63
+- Chrome 67
 
 ## Gameplay
 
-*   As the music plays, colored circles will be spawning in the middle.
-*   Collect with the mouse to trigger their effect:
-    * **blue**: increase points by the multiplicator
-    * **yellow**: increase multiplicator (+ 1)
-    * **red**: decrease multiplicator (/ 1.5)
-    * **purple**: increase color circle size for a few seconds
-*   Try to get as much points a possible, I guess?
+- As the music plays, colored circles will be spawning in the middle.
+- Collect with the mouse to trigger their effect:
+  - **blue**: increase points by the multiplicator
+  - **yellow**: increase multiplicator (+ 1)
+  - **red**: decrease multiplicator (/ 1.5)
+  - **purple**: increase color circle size for a few seconds
+- Try to get as much points a possible, I guess?
 
 ## Run
 
@@ -33,14 +33,14 @@ yarn start
 
 ## Music
 
-*   src/music/Come Back To You.mp3
+- src/music/Come Back To You.mp3
 
-    *   Title: Come Back To You
-    *   Artist: Silence is Sexy
-    *   [https://www.jamendo.com/track/214010/come-back-to-you](https://www.jamendo.com/track/214010/come-back-to-you)
+  - Title: Come Back To You
+  - Artist: Silence is Sexy
+  - [https://www.jamendo.com/track/214010/come-back-to-you](https://www.jamendo.com/track/214010/come-back-to-you)
 
-*   src/music/Stories from Emona I.mp3
+- src/music/Stories from Emona I.mp3
 
-    *   Title: Stories from Emona I
-    *   Artist: Maya Filipič
-    *   [https://www.jamendo.com/track/196219/stories-from-emona-i](https://www.jamendo.com/track/196219/stories-from-emona-i)
+  - Title: Stories from Emona I
+  - Artist: Maya Filipič
+  - [https://www.jamendo.com/track/196219/stories-from-emona-i](https://www.jamendo.com/track/196219/stories-from-emona-i)
