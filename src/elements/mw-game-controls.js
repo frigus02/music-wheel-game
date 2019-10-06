@@ -1,7 +1,7 @@
-import { html, prepareTemplate } from '../utils/mw-template.js';
+import { html } from '../utils/mw-template.js';
 import MwStateElementMixin from './mixins/mw-state-element-mixin.js';
 
-const template = prepareTemplate('mw-game-controls', html`
+const template = html`
     <style>
         :host {
             display: block;
@@ -22,7 +22,7 @@ const template = prepareTemplate('mw-game-controls', html`
         <option value="game" selected>Game</option>
         <option value="audio-frequency">Audio Frequency</option>
     </select>
-`);
+`;
 
 class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
     constructor() {
@@ -35,7 +35,6 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
     }
 
     async connectedCallback() {
-        if (window.ShadyCSS) ShadyCSS.styleElement(this);
         if (!this.shadowRoot) {
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(document.importNode(template.content, true));

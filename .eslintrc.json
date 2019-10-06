@@ -27,7 +27,6 @@
         "new-cap": ["error", { "capIsNewExceptionPattern": "Mixin$" }]
     },
     "globals": {
-        "Redux": false,
-        "ShadyCSS": false
+        "Redux": false
     }
 }

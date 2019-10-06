@@ -9,12 +9,10 @@ An HTML5 music game. I'm mostly building this to play around with some new stuff
 
 ## Browser Requirements
 
-As of now (2017-06-19) you need an update-to-date browser and enable some experimental features to get it running. These are:
+As of now (2019-10-06) this has been tested with:
 
-*   Firefox 54:
-    *   ES Modules: dom.moduleScripts.enabled = true (since version 54)
-*   Chrome 60 (Canary):
-    *   ES Modules: Experimental Web Platform features (since Chrome 60)
+*   Firefox 63
+*   Chrome 67
 
 ## Gameplay
 

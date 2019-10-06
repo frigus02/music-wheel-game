@@ -5,16 +5,14 @@
   "description": "HTML5 music game.",
   "license": "MIT",
   "dependencies": {
-    "redux": "^3.6.0"
+    "redux": "^4.0.4"
   },
   "devDependencies": {
-    "bower": "^1.8.0",
-    "browser-sync": "^2.18.12",
-    "cpy": "^6.0.0",
-    "del": "^3.0.0"
+    "browser-sync": "^2.26.7",
+    "cpy": "^7.3.0",
+    "del": "^5.1.0"
   },
   "scripts": {
-    "postinstall": "bower install",
     "start": "browser-sync start --server --ss src --ss . --files src",
     "start:dist": "browser-sync start --server --ss dist --files dist",
     "build": "node ./build.js"

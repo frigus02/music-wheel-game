@@ -1,11 +1,3 @@
-function prepareTemplate(elementName, template) {
-    if (window.ShadyCSS) {
-        ShadyCSS.prepareTemplate(template, elementName);
-    }
-
-    return template;
-}
-
 function html(strings, ...values) {
     const content = `
         <template>
@@ -17,4 +9,4 @@ function html(strings, ...values) {
     return doc.head.firstChild;
 }
 
-export { html, prepareTemplate };
+export { html };

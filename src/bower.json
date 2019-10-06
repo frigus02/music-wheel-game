@@ -1,7 +1,0 @@
-{
-  "name": "music-wheel-game",
-  "private": true,
-  "dependencies": {
-    "webcomponentsjs": "webcomponents/webcomponentsjs#1.1.0"
-  }
-}

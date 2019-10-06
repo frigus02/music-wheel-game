@@ -1,7 +1,7 @@
-import { html, prepareTemplate } from '../utils/mw-template.js';
+import { html } from '../utils/mw-template.js';
 import MwStateElementMixin from './mixins/mw-state-element-mixin.js';
 
-const template = prepareTemplate('mw-game-status', html`
+const template = html`
     <style>
         :host {
             display: block;
@@ -20,11 +20,10 @@ const template = prepareTemplate('mw-game-status', html`
         <span id="time-duration">NaN</span>
     </div>
     <div id="points"></div>
-`);
+`;
 
 class MusicWheelGameStatus extends MwStateElementMixin(HTMLElement) {
     connectedCallback() {
-        if (window.ShadyCSS) ShadyCSS.styleElement(this);
         if (!this.shadowRoot) {
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(document.importNode(template.content, true));

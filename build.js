@@ -7,7 +7,6 @@ const cpy = require('cpy');
 async function build() {
     await del('dist/');
     await cpy('node_modules/redux/dist/redux.min.js', 'dist/node_modules/redux/dist/');
-    await cpy('src/bower_components/webcomponentsjs/webcomponents-*.js', 'dist/bower_components/webcomponentsjs/');
     await cpy('src/elements/mixins/*.js', 'dist/elements/mixins/');
     await cpy('src/elements/*.js', 'dist/elements/');
     await cpy('src/music/*.mp3', 'dist/music/');
