@@ -116,13 +116,72 @@ function createNewGlyphs(oldFrequencyData, newFrequencyData) {
 	return newGlyphs;
 }
 
-function getHitGlyphs(glyphs, radius, mouseX, mouseY) {
-	return glyphs.filter(glyph => {
-		const distance = Math.sqrt(
-			(mouseX - glyph.x) ** 2 + (mouseY - glyph.y) ** 2
-		);
-		return distance <= radius;
-	});
+const getDistanceBetweenPointsSquared = (x1, y1, x2, y2) =>
+	(x1 - x2) ** 2 + (y1 - y2) ** 2;
+
+const getDistanceBetweenPoints = (x1, y1) => (x2, y2) =>
+	Math.sqrt(getDistanceBetweenPointsSquared(x1, y1, x2, y2));
+
+const getDistanceBetweenLineSegmentAndPointSquared = (
+	x1Line,
+	y1Line,
+	x2Line,
+	y2Line,
+	xPoint,
+	yPoint
+) => {
+	const l2 = getDistanceBetweenPointsSquared(x1Line, y1Line, x2Line, y2Line);
+	if (l2 === 0) {
+		return getDistanceBetweenPointsSquared(x1Line, y1Line, xPoint, yPoint);
+	}
+
+	const t = Math.max(
+		0,
+		Math.min(
+			1,
+			((xPoint - x1Line) * (x2Line - x1Line) +
+				(yPoint - y1Line) * (y2Line - y1Line)) /
+				l2
+		)
+	);
+
+	return getDistanceBetweenPointsSquared(
+		xPoint,
+		yPoint,
+		x1Line + t * (x2Line - x1Line),
+		y1Line + t * (y2Line - y1Line)
+	);
+};
+
+const getDistanceBetweenLineSegmentAndPoint = (
+	x1Line,
+	y1Line,
+	x2Line,
+	y2Line
+) => (xPoint, yPoint) =>
+	Math.sqrt(
+		getDistanceBetweenLineSegmentAndPointSquared(
+			x1Line,
+			y1Line,
+			x2Line,
+			y2Line,
+			xPoint,
+			yPoint
+		)
+	);
+
+function getHitGlyphs(glyphs, radius, mouseX, mouseY, lastMouseX, lastMouseY) {
+	const hasLastMouse = lastMouseX !== null && lastMouseY !== null;
+	const distanceFunc = hasLastMouse
+		? getDistanceBetweenLineSegmentAndPoint(
+				mouseX,
+				mouseY,
+				lastMouseX,
+				lastMouseY
+		  )
+		: getDistanceBetweenPoints(mouseX, mouseY);
+
+	return glyphs.filter(glyph => distanceFunc(glyph.x, glyph.y) <= radius);
 }
 
 function getModifiedPointsAfterHitGlyph(points, multiplicator, glyphs) {
@@ -172,8 +231,12 @@ const defaultState = {
 	points: 0,
 	multiplicator: 1,
 	glyphRadius: 7,
-	remainingBigRadiusTicks: 0
+	remainingBigRadiusTicks: 0,
+	lastMouse: { x: null, y: null }
 };
+
+// Makes hit radius of glyphs slightly larger, so it's less frustrating.
+const hitRadiusAddition = 3;
 
 export default function reducer(state = defaultState, action) {
 	switch (action.type) {
@@ -195,11 +258,12 @@ export default function reducer(state = defaultState, action) {
 		case "HIT_GLYPH": {
 			const hitGlyphs = getHitGlyphs(
 				state.glyphs,
-				state.glyphRadius,
+				state.glyphRadius + hitRadiusAddition,
 				action.x,
-				action.y
+				action.y,
+				state.lastMouse.x,
+				state.lastMouse.y
 			);
-			if (hitGlyphs.length === 0) return state;
 
 			return {
 				...state,
@@ -213,7 +277,8 @@ export default function reducer(state = defaultState, action) {
 					state.multiplicator,
 					hitGlyphs
 				),
-				...getBigRadiusAfterHitGlyph(state.remainingBigRadiusTicks, hitGlyphs)
+				...getBigRadiusAfterHitGlyph(state.remainingBigRadiusTicks, hitGlyphs),
+				lastMouse: { x: action.x, y: action.y }
 			};
 		}
 		default:
