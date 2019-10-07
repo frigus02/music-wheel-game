@@ -3,7 +3,7 @@ export default function reducer(state = "LOADING", action) {
 		case "LOAD_FILE":
 			return "LOADING";
 		case "SET_MUSIC":
-			return "PLAYING"; //'READY'
+			return "READY";
 		case "PLAY":
 			if (!(state === "READY" || state === "PAUSED")) return state;
 			return "PLAYING";
