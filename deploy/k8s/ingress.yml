@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: music-wheel-game
+  annotations:
+    cert-manager.io/cluster-issuer: kubesail-letsencrypt
+    certmanager.k8s.io/cluster-issuer: kubesail-letsencrypt
+spec:
+  rules:
+    - host: music-wheel-game.kuehle.me
+      http:
+        paths:
+          - backend:
+              serviceName: music-wheel-game
+              servicePort: 80
+  tls:
+    - hosts:
+        - music-wheel-game.kuehle.me
+      secretName: music-wheel-game-kuehle-me
