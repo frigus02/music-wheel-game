@@ -7,7 +7,7 @@ const store = Redux.createStore(
 	window.__REDUX_DEVTOOLS_EXTENSION__ &&
 		window.__REDUX_DEVTOOLS_EXTENSION__({
 			maxAge: 10,
-			shouldRecordChanges: false
+			shouldRecordChanges: false,
 		})
 );
 

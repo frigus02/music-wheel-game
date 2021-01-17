@@ -55,7 +55,7 @@ class MusicWheelGame extends MwStateElementMixin(HTMLElement) {
 				gameCanvas: this.shadowRoot.getElementById("game-canvas"),
 				audioFrequencyCanvas: this.shadowRoot.getElementById(
 					"audio-frequency-canvas"
-				)
+				),
 			};
 		}
 

@@ -21,7 +21,7 @@ class MusicWheelBaseCanvas extends HTMLElement {
 			this._drawSettings = {
 				context: this.$.canvas.getContext("2d"),
 				width: 0,
-				height: 0
+				height: 0,
 			};
 		}
 

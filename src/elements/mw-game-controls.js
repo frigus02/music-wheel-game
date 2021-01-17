@@ -43,7 +43,7 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
 				playButton: this.shadowRoot.getElementById("play-button"),
 				pauseButton: this.shadowRoot.getElementById("pause-button"),
 				musicFileSelect: this.shadowRoot.getElementById("music-file-select"),
-				uiSelect: this.shadowRoot.getElementById("ui-select")
+				uiSelect: this.shadowRoot.getElementById("ui-select"),
 			};
 		}
 
@@ -96,7 +96,7 @@ class MusicWheelGameControls extends MwStateElementMixin(HTMLElement) {
 	_uiSelected() {
 		this.dispatch({
 			type: "SET_UI",
-			ui: this.$.uiSelect.selectedOptions[0].value
+			ui: this.$.uiSelect.selectedOptions[0].value,
 		});
 	}
 }

@@ -32,7 +32,7 @@ class MusicWheelGameStatus extends MwStateElementMixin(HTMLElement) {
 				info: this.shadowRoot.getElementById("info"),
 				timeDuration: this.shadowRoot.getElementById("time-duration"),
 				timeElapsed: this.shadowRoot.getElementById("time-elapsed"),
-				points: this.shadowRoot.getElementById("points")
+				points: this.shadowRoot.getElementById("points"),
 			};
 		}
 

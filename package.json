@@ -8,10 +8,10 @@
     "redux": "^4.0.5"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "cpy": "^8.0.0",
-    "del": "^5.1.0",
-    "prettier": "^1.19.1"
+    "browser-sync": "^2.26.13",
+    "cpy": "^8.1.1",
+    "del": "^6.0.0",
+    "prettier": "^2.2.1"
   },
   "scripts": {
     "start": "browser-sync start --server --ss src --ss . --files src",

@@ -52,7 +52,8 @@ class MusicWheelGameCanvas extends MwStateElementMixin(MusicWheelBaseCanvas) {
 			x:
 				this._getTouchCoordinate(event, "pageX") - this._drawSettings.width / 2,
 			y:
-				this._getTouchCoordinate(event, "pageY") - this._drawSettings.height / 2
+				this._getTouchCoordinate(event, "pageY") -
+				this._drawSettings.height / 2,
 		});
 	}
 

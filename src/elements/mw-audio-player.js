@@ -70,7 +70,7 @@ class MusicWheelAudioPlayer extends MwStateElementMixin(HTMLElement) {
 		this.dispatch({
 			type: "TICK",
 			elapsed: elapsed,
-			frequencyData: new Float32Array(this._analyserBuffer)
+			frequencyData: new Float32Array(this._analyserBuffer),
 		});
 
 		this._sendTickRaf = requestAnimationFrame(this._sendTick);
@@ -93,7 +93,7 @@ class MusicWheelAudioPlayer extends MwStateElementMixin(HTMLElement) {
 			type: "SET_MUSIC",
 			file: fileName,
 			buffer: buffer,
-			duration: buffer.duration
+			duration: buffer.duration,
 		});
 	}
 

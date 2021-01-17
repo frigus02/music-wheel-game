@@ -1,6 +1,6 @@
 import store from "../../utils/mw-store.js";
 
-const MwStateElementMixin = superclass =>
+const MwStateElementMixin = (superclass) =>
 	class MwStateElementMixin extends superclass {
 		constructor() {
 			super();
