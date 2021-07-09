@@ -5,13 +5,13 @@
   "description": "HTML5 music game.",
   "license": "MIT",
   "dependencies": {
-    "redux": "^4.0.5"
+    "redux": "^4.1.0"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.13",
-    "cpy": "^8.1.1",
+    "browser-sync": "^2.27.4",
+    "cpy": "^8.1.2",
     "del": "^6.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.2"
   },
   "scripts": {
     "start": "browser-sync start --server --ss src --ss . --files src",
